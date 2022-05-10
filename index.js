@@ -65,6 +65,7 @@ async function run() {
             res.send(car);
 
         });
+
         // sort api
         app.get('/cars', async (req, res) => {
             const authHeader = req.headers.authorization;
@@ -74,7 +75,7 @@ async function run() {
             const car = await cursor.toArray();
             res.send(car);
 
-        })
+        });
 
     }
     finally { };
