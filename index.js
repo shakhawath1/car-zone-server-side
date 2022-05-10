@@ -65,6 +65,16 @@ async function run() {
             res.send(car);
 
         });
+        // sort api
+        app.get('/cars', async (req, res) => {
+            const authHeader = req.headers.authorization;
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = orderCollection.find(query);
+            const car = await cursor.toArray();
+            res.send(car);
+
+        })
 
     }
     finally { };
