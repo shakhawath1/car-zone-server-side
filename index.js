@@ -39,7 +39,7 @@ async function run() {
         });
 
         // delete
-        app.delete('/car/:id', async (req, res) => {
+        app.delete('/cars/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const car = await carCollection.deleteOne(query);
