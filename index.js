@@ -3,7 +3,12 @@ const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const port = process.env.PORT || 5000;
+
 const app = express();
+
+// middleware
+app.use(cors());
+app.use(express.json());
 
 // middleware
 app.use(cors());
@@ -22,8 +27,8 @@ async function run() {
         app.get('/cars', async (req, res) => {
             const query = {};
             const cursor = carCollection.find(query);
-            const products = await cursor.toArray();
-            res.send(products);
+            const cars = await cursor.toArray();
+            res.send(cars);
         });
         // get one product
         app.get('/cars/:id', async (req, res) => {
@@ -34,12 +39,10 @@ async function run() {
         });
 
         // delete
-        app.delete('/cars/:id', async (req, res) => {
+        app.delete('/car/:id', async (req, res) => {
             const id = req.params.id;
-            console.log(id)
             const query = { _id: ObjectId(id) };
             const car = await carCollection.deleteOne(query);
-            console.log(id)
             res.send(car);
         });
 
@@ -68,8 +71,8 @@ async function run() {
 
         // sort api
         app.get('/cars', async (req, res) => {
-            const authHeader = req.headers.authorization;
             const email = req.query.email;
+            console.log(email);
             const query = { email: email };
             const cursor = carCollection.find(query);
             const car = await cursor.toArray();
@@ -79,7 +82,7 @@ async function run() {
 
     }
     finally { };
-}
+};
 
 run().catch(console.dir);
 
@@ -88,5 +91,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('listening')
-})
+    console.log('listen to port', port)
+});
